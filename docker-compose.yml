@@ -66,26 +66,51 @@ services:
       - chroma_data:/chroma/chroma
     restart: unless-stopped
 
-  # 5. FastAPI Core Intelligence Service (Search, RAG, Rules & Engine)
-  core-service:
+  # 5. Search & Retrieval Component (FastAPI Port 8001)
+  search-retrieval-service:
     build:
-      context: ./core_service
+      context: ./search_retrieval_service
       dockerfile: Dockerfile
-    container_name: reg-iris-core-service
+    container_name: reg-iris-search-service
     environment:
-      - DATABASE_URL=postgresql://postgres:postgrespassword@postgres:5432/regiris
       - ELASTICSEARCH_URL=http://elasticsearch:9200
       - CHROMADB_HOST=chromadb
       - CHROMADB_PORT=8000
     ports:
-      - "8080:8000"
+      - "8001:8001"
     depends_on:
-      postgres:
-        condition: service_healthy
       elasticsearch:
         condition: service_healthy
       chromadb:
         condition: service_started
+    restart: unless-stopped
+
+  # 6. Rules Engine & Impact Scanner Component (FastAPI Port 8002)
+  rules-engine-service:
+    build:
+      context: ./rules_engine_service
+      dockerfile: Dockerfile
+    container_name: reg-iris-rules-service
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgrespassword@postgres:5432/regiris
+    ports:
+      - "8002:8002"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # 7. Frontend Dashboard (Nginx Port 80)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: reg-iris-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - search-retrieval-service
+      - rules-engine-service
     restart: unless-stopped
 
 volumes:
