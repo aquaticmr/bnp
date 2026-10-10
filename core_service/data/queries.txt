@@ -1,0 +1,8 @@
+What are the mandatory LEI reporting requirements under EMIR Article 9?
+How should negative prices be represented according to MiFID II RTS 22?
+What is the timestamp granularity required by MiFID II RTS 25 for algorithmic trading?
+Under CFTC Part 43, what transactions qualify for real-time public reporting?
+What are the acceptable Market Identifier Codes (MIC) for trading venues?
+What are the maturity date validations for interest rate swaps under EMIR Refit?
+What currency codes are permitted under FCA SUP 17 Annex 1?
+What are the Unique Trade Identifier (UTI) generation obligations?

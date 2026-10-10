@@ -1,0 +1,6 @@
+document_id,file_name,storage_path,regulator,jurisdiction,effective_date,category,version,parent_doc_id
+1,EMIR_Technical_Standards_v1.0.pdf,reg-iris-docs/EMIR_Technical_Standards_v1.0.pdf,EMIR,EU,2024-04-29,TRANSACTION_REPORTING,v1.0,
+2,EMIR_Technical_Standards_v2.0.pdf,reg-iris-docs/EMIR_Technical_Standards_v2.0.pdf,EMIR,EU,2026-01-15,TRANSACTION_REPORTING,v2.0,1
+3,MiFID_II_RTS_22_Reporting_Guide.pdf,reg-iris-docs/MiFID_II_RTS_22_Reporting_Guide.pdf,MiFID II,EU,2024-01-01,TRADE_TRANSPARENCY,v1.2,
+4,Dodd_Frank_CFTC_Part_43_Guide.pdf,reg-iris-docs/Dodd_Frank_CFTC_Part_43_Guide.pdf,Dodd-Frank,US,2024-06-30,SWAP_DATA_RECORDKEEPING,v1.0,
+5,FCA_SUP_17_Transaction_Reporting.pdf,reg-iris-docs/FCA_SUP_17_Transaction_Reporting.pdf,FCA,UK,2024-03-31,MARKET_ABUSE,v1.1,

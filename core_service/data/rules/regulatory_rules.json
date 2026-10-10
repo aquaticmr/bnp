@@ -1,0 +1,122 @@
+{
+  "version": "1.0.0",
+  "rules": [
+    {
+      "rule_id": "EMIR-R4.2",
+      "name": "Mandatory Legal Entity Identifier (LEI) Validation",
+      "regulator": "EMIR",
+      "article_citation": "EMIR Article 9(1) - Commission Delegated Regulation (EU) No 148/2013",
+      "category": "COUNTERPARTY_IDENTIFICATION",
+      "severity": "HIGH",
+      "description": "Counterparty must possess a valid 20-character ISO 17442 Legal Entity Identifier (LEI).",
+      "condition": {
+        "field": "Counterparty_LEI",
+        "operator": "lei_valid"
+      },
+      "explanation_template": "Counterparty LEI is missing or invalid format (${Counterparty_LEI}) - required by EMIR Article 9(1)"
+    },
+    {
+      "rule_id": "MIFID-R1.1",
+      "name": "Positive Execution Price Requirement",
+      "regulator": "MiFID II",
+      "article_citation": "MiFID II RTS 22 Article 15 - Transaction Price Fields",
+      "category": "PRICING",
+      "severity": "HIGH",
+      "description": "Traded price must be strictly positive and greater than zero.",
+      "condition": {
+        "field": "Price",
+        "operator": "positive_number"
+      },
+      "explanation_template": "Execution Price is negative or zero (${Price}) - violates MiFID II RTS 22 Article 15"
+    },
+    {
+      "rule_id": "DODD-R12.3",
+      "name": "Positive Notional Volume & Quantity",
+      "regulator": "Dodd-Frank",
+      "article_citation": "CFTC Part 43 Real-Time Public Reporting § 43.4",
+      "category": "TRANSACTION_VOLUME",
+      "severity": "HIGH",
+      "description": "Transaction quantity must be strictly greater than zero.",
+      "condition": {
+        "field": "Quantity",
+        "operator": "greater_than",
+        "expected_value": 0
+      },
+      "explanation_template": "Transaction Quantity (${Quantity}) must be greater than 0 under CFTC Part 43 § 43.4"
+    },
+    {
+      "rule_id": "MIFID-R2.4",
+      "name": "Execution Timestamp ISO 8601 Compliance",
+      "regulator": "MiFID II",
+      "article_citation": "MiFID II RTS 25 - Clock Synchronization & Timestamp Granularity",
+      "category": "CLOCK_SYNCHRONIZATION",
+      "severity": "MEDIUM",
+      "description": "Execution timestamp must follow valid UTC ISO 8601 format.",
+      "condition": {
+        "field": "Execution_Timestamp",
+        "operator": "iso8601_valid"
+      },
+      "explanation_template": "Execution Timestamp (${Execution_Timestamp}) violates MiFID II RTS 25 UTC ISO 8601 clock sync requirement"
+    },
+    {
+      "rule_id": "FCA-R3.1",
+      "name": "Standard ISO 4217 Currency Code Validation",
+      "regulator": "FCA",
+      "article_citation": "FCA Handbook SUP 17 Annex 1 - Transaction Reporting Fields",
+      "category": "TRANSACTION_REPORTING",
+      "severity": "MEDIUM",
+      "description": "Currency code must be a valid 3-character ISO 4217 code.",
+      "condition": {
+        "field": "Currency",
+        "operator": "in_set",
+        "expected_value": ["USD", "EUR", "GBP", "JPY", "CHF", "CAD", "AUD", "SGD", "HKD", "SEK"]
+      },
+      "explanation_template": "Currency code (${Currency}) is not a recognized ISO 4217 currency under FCA SUP 17"
+    },
+    {
+      "rule_id": "CFTC-R5.1",
+      "name": "Permitted Asset Class Categorization",
+      "regulator": "Dodd-Frank",
+      "article_citation": "CFTC Part 45 Swap Data Recordkeeping § 45.3",
+      "category": "DATA_CLASSIFICATION",
+      "severity": "HIGH",
+      "description": "Asset class must be an eligible swap category: EQUITY, FX, COMMODITY, RATES, or CREDIT.",
+      "condition": {
+        "field": "Asset_Class",
+        "operator": "in_set",
+        "expected_value": ["EQUITY", "FX", "COMMODITY", "RATES", "CREDIT"]
+      },
+      "explanation_template": "Asset Class (${Asset_Class}) is not a permitted swap asset class under CFTC Part 45 § 45.3"
+    },
+    {
+      "rule_id": "MIFID-R4.1",
+      "name": "Trading Venue Market Identifier Code (MIC)",
+      "regulator": "MiFID II",
+      "article_citation": "MiFID II RTS 22 Field 36 - Venue Identification",
+      "category": "VENUE_IDENTIFICATION",
+      "severity": "MEDIUM",
+      "description": "Trading venue must be populated with a valid 4-character MIC or XOFF for OTC bilateral trades.",
+      "condition": {
+        "field": "Venue",
+        "operator": "regex_match",
+        "expected_value": "^[A-Z0-9]{4}$"
+      },
+      "explanation_template": "Trading Venue (${Venue}) does not conform to ISO 10383 4-character MIC standard required by MiFID II RTS 22 Field 36"
+    },
+    {
+      "rule_id": "EMIR-R7.4",
+      "name": "Maturity Date Posterior to Execution Timestamp",
+      "regulator": "EMIR",
+      "article_citation": "EMIR Article 9(3) - Term Structure Validation",
+      "category": "TERM_STRUCTURE",
+      "severity": "HIGH",
+      "description": "Derivative contract maturity date must be strictly posterior to the execution date.",
+      "condition": {
+        "field": "Maturity_Date",
+        "operator": "date_after",
+        "target_field": "Execution_Timestamp"
+      },
+      "explanation_template": "Maturity Date (${Maturity_Date}) is prior to or concurrent with Execution Timestamp (${Execution_Timestamp}) under EMIR Art 9(3)"
+    }
+  ]
+}

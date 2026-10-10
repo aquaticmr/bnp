@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: demo
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/regiris
+    username: postgres
+    password: postgrespassword
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  elasticsearch:
+    uris: http://localhost:9200
+    username: elastic
+    password: changeme
+
+minio:
+  url: http://localhost:9000
+  access:
+    key: minioadmin
+  secret:
+    key: minioadmin
+  bucket:
+    name: reg-iris-docs
+
+chromadb:
+  url: http://localhost:8000
+  collection: reg-iris-collection
